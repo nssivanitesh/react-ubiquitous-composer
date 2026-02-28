@@ -134,6 +134,42 @@ composer install
 
 ---
 
+## Local Development with Laravel Sail
+
+This package ships with a Docker Compose configuration that gives you a PHP 8.2 environment without needing PHP installed on your host machine — similar to how [Laravel Sail](https://laravel.com/docs/sail) works for full Laravel applications.
+
+### Prerequisites
+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) (or Docker Engine + Compose plugin)
+
+### First-time setup
+
+```bash
+# Build the image and install Composer dependencies
+docker compose build
+docker compose run --rm php composer install
+```
+
+### Running tests
+
+```bash
+docker compose run --rm php ./vendor/bin/phpunit
+```
+
+### Opening an interactive shell
+
+```bash
+docker compose run --rm php bash
+```
+
+### Running any Composer command
+
+```bash
+docker compose run --rm php composer <command>
+```
+
+---
+
 ## Changelog
 
 See [CHANGELOG.md](CHANGELOG.md).

@@ -30,3 +30,6 @@
 /phpunit.result.cache
 .phpunit.cache/
 coverage/
+
+# Docker
+/.env
