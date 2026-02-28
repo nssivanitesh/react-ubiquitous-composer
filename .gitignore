@@ -23,3 +23,10 @@
 /app/Config/core.php
 /app/Config/database.php
 /vendors/*
+
+/vendor/
+/composer.lock
+/.phpunit.result.cache
+/phpunit.result.cache
+.phpunit.cache/
+coverage/
