@@ -29,6 +29,7 @@ final class DatePickerElementConfig extends BaseElementConfig
         public readonly ?string $min = null,
         public readonly ?string $max = null,
         public readonly ?bool $includeTime = null,
+        public readonly ?string $validateUrl = null,
     ) {
         parent::__construct($id, $name, $order, $width, $label, $labelPosition, $tooltip, $units, $unitsPosition, $disabled, $readonly, $required, $hidden, $hiddenExpr, $disabledExpr, $className, $style, $validations);
     }
@@ -44,6 +45,7 @@ final class DatePickerElementConfig extends BaseElementConfig
             'min' => $this->min,
             'max' => $this->max,
             'includeTime' => $this->includeTime,
+            'validateUrl' => $this->validateUrl,
         ], fn($v) => $v !== null));
     }
 }

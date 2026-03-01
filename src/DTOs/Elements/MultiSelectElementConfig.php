@@ -31,6 +31,7 @@ final class MultiSelectElementConfig extends BaseElementConfig
         public readonly ?array $defaultValue = null,
         public readonly ?string $placeholder = null,
         public readonly ?int $maxItems = null,
+        public readonly ?string $optionsUrl = null,
     ) {
         parent::__construct($id, $name, $order, $width, $label, $labelPosition, $tooltip, $units, $unitsPosition, $disabled, $readonly, $required, $hidden, $hiddenExpr, $disabledExpr, $className, $style, $validations);
     }
@@ -44,6 +45,7 @@ final class MultiSelectElementConfig extends BaseElementConfig
             'defaultValue' => $this->defaultValue,
             'placeholder' => $this->placeholder,
             'maxItems' => $this->maxItems,
+            'optionsUrl' => $this->optionsUrl,
         ], fn($v) => $v !== null);
 
         $extra['options'] = array_map(fn(SelectOption $o) => $o->toArray(), $this->options);

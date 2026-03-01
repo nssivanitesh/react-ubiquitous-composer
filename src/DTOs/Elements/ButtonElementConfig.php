@@ -29,6 +29,8 @@ final class ButtonElementConfig extends BaseElementConfig
         public readonly ?string $size = null,
         public readonly ?string $icon = null,
         public readonly ?string $iconPosition = null,
+        public readonly ?string $submitUrl = null,
+        public readonly ?string $submitMethod = null,
     ) {
         parent::__construct($id, $name, $order, $width, $label, $labelPosition, $tooltip, $units, $unitsPosition, $disabled, $readonly, $required, $hidden, $hiddenExpr, $disabledExpr, $className, $style, $validations);
     }
@@ -44,6 +46,8 @@ final class ButtonElementConfig extends BaseElementConfig
             'size' => $this->size,
             'icon' => $this->icon,
             'iconPosition' => $this->iconPosition,
+            'submitUrl' => $this->submitUrl,
+            'submitMethod' => $this->submitMethod,
         ], fn($v) => $v !== null));
     }
 }

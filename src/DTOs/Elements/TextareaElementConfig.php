@@ -30,6 +30,7 @@ final class TextareaElementConfig extends BaseElementConfig
         public readonly ?int $cols = null,
         public readonly ?string $resize = null,
         public readonly ?int $maxLength = null,
+        public readonly ?string $validateUrl = null,
     ) {
         parent::__construct($id, $name, $order, $width, $label, $labelPosition, $tooltip, $units, $unitsPosition, $disabled, $readonly, $required, $hidden, $hiddenExpr, $disabledExpr, $className, $style, $validations);
     }
@@ -46,6 +47,7 @@ final class TextareaElementConfig extends BaseElementConfig
             'cols' => $this->cols,
             'resize' => $this->resize,
             'maxLength' => $this->maxLength,
+            'validateUrl' => $this->validateUrl,
         ], fn($v) => $v !== null));
     }
 }

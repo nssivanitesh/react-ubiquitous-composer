@@ -1,7 +1,7 @@
 {
     "name": "nssivanitesh/react-ubiquitous-composer",
     "description": "Laravel Composer package providing standardized DTOs and helper functions for the react-ubiquitous UI Config API",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "type": "library",
     "license": "MIT",
     "keywords": ["laravel", "dto", "react-ubiquitous", "ui-config"],

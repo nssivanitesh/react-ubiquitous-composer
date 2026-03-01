@@ -27,6 +27,7 @@ final class RatingElementConfig extends BaseElementConfig
         public readonly ?int $value = null,
         public readonly ?int $defaultValue = null,
         public readonly ?bool $allowHalf = null,
+        public readonly ?string $submitUrl = null,
     ) {
         parent::__construct($id, $name, $order, $width, $label, $labelPosition, $tooltip, $units, $unitsPosition, $disabled, $readonly, $required, $hidden, $hiddenExpr, $disabledExpr, $className, $style, $validations);
     }
@@ -40,6 +41,7 @@ final class RatingElementConfig extends BaseElementConfig
             'value' => $this->value,
             'defaultValue' => $this->defaultValue,
             'allowHalf' => $this->allowHalf,
+            'submitUrl' => $this->submitUrl,
         ], fn($v) => $v !== null));
     }
 }

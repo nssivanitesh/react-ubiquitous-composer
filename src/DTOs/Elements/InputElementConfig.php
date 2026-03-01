@@ -34,6 +34,7 @@ final class InputElementConfig extends BaseElementConfig
         public readonly ?string $accept = null,
         public readonly ?string $autocomplete = null,
         public readonly ?string $datalistId = null,
+        public readonly ?string $validateUrl = null,
     ) {
         parent::__construct($id, $name, $order, $width, $label, $labelPosition, $tooltip, $units, $unitsPosition, $disabled, $readonly, $required, $hidden, $hiddenExpr, $disabledExpr, $className, $style, $validations);
     }
@@ -54,6 +55,7 @@ final class InputElementConfig extends BaseElementConfig
             'accept' => $this->accept,
             'autocomplete' => $this->autocomplete,
             'datalistId' => $this->datalistId,
+            'validateUrl' => $this->validateUrl,
         ], fn($v) => $v !== null));
     }
 }

@@ -27,6 +27,7 @@ final class OtpInputElementConfig extends BaseElementConfig
         public readonly ?string $value = null,
         public readonly ?string $defaultValue = null,
         public readonly ?bool $mask = null,
+        public readonly ?string $verifyUrl = null,
     ) {
         parent::__construct($id, $name, $order, $width, $label, $labelPosition, $tooltip, $units, $unitsPosition, $disabled, $readonly, $required, $hidden, $hiddenExpr, $disabledExpr, $className, $style, $validations);
     }
@@ -40,6 +41,7 @@ final class OtpInputElementConfig extends BaseElementConfig
             'value' => $this->value,
             'defaultValue' => $this->defaultValue,
             'mask' => $this->mask,
+            'verifyUrl' => $this->verifyUrl,
         ], fn($v) => $v !== null));
     }
 }

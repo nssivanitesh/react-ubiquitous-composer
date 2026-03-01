@@ -1,6 +1,6 @@
 # API Specification — react-ubiquitous UI Config
 
-**Library version: `1.0.14`** · npm package: [`react-ubiquitous`](https://www.npmjs.com/package/react-ubiquitous)
+**Library version: `1.2.0`** · npm package: [`react-ubiquitous`](https://www.npmjs.com/package/react-ubiquitous)
 
 > **The frontend is just a human-readable version of the API response.**
 
@@ -315,6 +315,8 @@ A chat window section. The **left pane** shows a searchable list of conversation
 | `inputPlaceholder` | `string` |  |  | Placeholder text for the message input. Default: `'Type a message…'`. |
 | `sendButtonText` | `string` |  |  | Label for the send button. Default: `'Send'`. |
 | `currentUserName` | `string` |  |  | Display name used for messages sent by the current user. Default: `'You'`. |
+| `messagesEndpoint` | `ChatMessagesEndpointConfig` |  |  | Endpoint for loading message history for the selected conversation. |
+| `sendEndpoint` | `ChatSendEndpointConfig` |  |  | Endpoint for sending a new message to the selected conversation. |
 
 
 ### `layout: "media"` — MediaSectionConfig
@@ -769,6 +771,7 @@ All element configs inherit these fields:
 | `accept` | `string` |  |  | Accepted MIME types (type="file"), e.g. "image/*,.pdf". |
 | `autocomplete` | `string` |  |  | HTML autocomplete attribute. |
 | `datalistId` | `string` |  |  | id of an associated <datalist> element. |
+| `validateUrl` | `string` |  |  | Async validation endpoint called on blur. `GET {validateUrl}?value={encodedValue}` → `{ valid: boolean, message?: string }` @example `"/api/users/available"` — checks username uniqueness. |
 
 
 ### `type: "checkbox"` — CheckboxElementConfig
@@ -781,6 +784,7 @@ All element configs inherit these fields:
 | `defaultChecked` | `boolean` |  |  |  |
 | `checked` | `boolean` |  |  | Controlled checked state (consumer manages state). |
 | `value` | `string` |  |  | The value submitted with the form when checked. |
+| `validateUrl` | `string` |  |  | Async validation endpoint called when the checkbox state changes. `GET {validateUrl}?value={true|false}` → `{ valid: boolean, message?: string }` |
 
 
 ### `type: "radio"` — RadioElementConfig
@@ -794,6 +798,8 @@ All element configs inherit these fields:
 | `defaultValue` | `string` |  |  |  |
 | `value` | `string` |  |  | Controlled selected value. |
 | `orientation` | `'horizontal' | 'vertical'` |  |  | Layout direction of the radio options. |
+| `optionsUrl` | `string` |  |  | Remote endpoint for loading radio options dynamically on mount. `GET {optionsUrl}` → `Array<{ label: string, value: string, disabled?: boolean }>` Merges with (and overrides) any static `options`. |
+| `validateUrl` | `string` |  |  | Async validation endpoint called when selection changes. `GET {validateUrl}?value={encodedValue}` → `{ valid: boolean, message?: string }` |
 
 
 ### `type: "textarea"` — TextareaElementConfig
@@ -810,6 +816,7 @@ All element configs inherit these fields:
 | `cols` | `number` |  |  | Visible number of character columns. |
 | `resize` | `ResizeBehaviour` — one of: `"none"`, `"both"`, `"horizontal"`, `"vertical"` |  |  | CSS resize behaviour. |
 | `maxLength` | `number` |  |  |  |
+| `validateUrl` | `string` |  |  | Async validation endpoint called on blur. `GET {validateUrl}?value={encodedValue}` → `{ valid: boolean, message?: string }` |
 
 
 ### `type: "select"` — SelectElementConfig
@@ -825,6 +832,7 @@ All element configs inherit these fields:
 | `defaultValue` | `string | string[]` |  |  |  |
 | `value` | `string | string[]` |  |  | Controlled selected value(s). |
 | `placeholder` | `string` |  |  | Placeholder / empty first option text. |
+| `optionsUrl` | `string` |  |  | Remote endpoint for loading options dynamically on mount. `GET {optionsUrl}` → `Array<{ label: string, value: string, disabled?: boolean }>` Replaces static `options` when provided and loaded successfully. |
 
 
 ### `type: "button"` — ButtonElementConfig
@@ -840,6 +848,8 @@ All element configs inherit these fields:
 | `size` | `ButtonSize` — one of: `"sm"`, `"md"`, `"lg"` |  |  | Size preset. |
 | `icon` | `string` |  |  | Optional icon name (e.g. Lucide icon identifier). |
 | `iconPosition` | `'left' | 'right'` |  |  | Whether the icon appears before or after the text. |
+| `submitUrl` | `string` |  |  | POST destination for config-driven form submission. When set and `buttonType === 'submit'`, clicking the button POSTs the current `formValues` to this URL instead of triggering a native browser form submit. `POST {submitUrl}` body: `Record<string, unknown>` → any |
+| `submitMethod` | `'POST' | 'PUT'` |  |  | HTTP method used when `submitUrl` is provided. Defaults to `'POST'`. |
 
 
 ### `type: "label"` — LabelElementConfig
@@ -862,6 +872,8 @@ All element configs inherit these fields:
 | `type` | `'fieldset'` | ✔ |  |  |
 | `legend` | `string` |  |  | <legend> caption text. |
 | `children` | `UIElementConfig[]` | ✔ |  | Child elements rendered inside the fieldset. |
+| `submitUrl` | `string` |  |  | POST destination for config-driven form submission of the entire fieldset. When set, a `submit` button inside the fieldset will POST all child field values to this URL. `POST {submitUrl}` body: `Record<string, unknown>` → any |
+| `submitMethod` | `'POST' | 'PUT'` |  |  | HTTP method used when `submitUrl` is provided. Defaults to `'POST'`. |
 
 
 ### `type: "datalist"` — DatalistElementConfig
@@ -872,6 +884,7 @@ All element configs inherit these fields:
 |-------|------|:--------:|---------|-------------|
 | `type` | `'datalist'` | ✔ |  |  |
 | `options` | `DatalistOption[]` | ✔ |  | Autocomplete suggestions — plain strings or label/value pairs. |
+| `optionsUrl` | `string` |  |  | Remote endpoint for loading suggestions dynamically on mount. `GET {optionsUrl}` → `Array<{ label: string, value: string }>` or `string[]` Merges with static `options` when provided. |
 
 
 ### `type: "output"` — OutputElementConfig
@@ -885,6 +898,7 @@ All element configs inherit these fields:
 | `defaultValue` | `string` |  |  |  |
 | `value` | `string` |  |  | Controlled display value. |
 | `format` | `'text' | 'currency' | 'percentage' | 'number' | string` |  |  | Display format hint for the renderer (e.g. "currency", "percentage"). |
+| `valueUrl` | `string` |  |  | Remote endpoint for fetching a server-computed value on mount. `GET {valueUrl}` → `{ value: string }` or a raw string. Takes precedence over static `value` / `defaultValue` but is overridden by a `formula` when both are present. |
 | `formula` | `string` |  |  | Formula expression for computing this field's value from sibling fields. Field values are referenced by their `name` inside `{` `}` braces. Basic arithmetic operators `+`, `-`, `*`, `/` and parentheses are supported. @example ```json { "formula": "{price} * {quantity}" } { "formula": "({subtotal} + {shipping}) * (1 + {taxRate} / 100)" } ``` When a formula is supplied, `value` is computed automatically and any static `value` / `defaultValue` fields are ignored. |
 
 
@@ -901,6 +915,7 @@ All element configs inherit these fields:
 | `min` | `string` |  |  | Minimum selectable date (YYYY-MM-DD). |
 | `max` | `string` |  |  | Maximum selectable date (YYYY-MM-DD). |
 | `includeTime` | `boolean` |  |  | Whether to include time selection. |
+| `validateUrl` | `string` |  |  | Async validation endpoint called when a date is selected. `GET {validateUrl}?value={YYYY-MM-DD}` → `{ valid: boolean, message?: string }` @example `"/api/appointments/available"` — checks whether the chosen date is bookable. |
 
 
 ### `type: "multiselect"` — MultiSelectElementConfig
@@ -915,6 +930,7 @@ All element configs inherit these fields:
 | `defaultValue` | `string[]` |  |  |  |
 | `placeholder` | `string` |  |  |  |
 | `maxItems` | `number` |  |  | Maximum number of selectable items. |
+| `optionsUrl` | `string` |  |  | Remote endpoint for loading options dynamically on mount. `GET {optionsUrl}` → `Array<{ label: string, value: string, disabled?: boolean }>` Replaces static `options` when provided and loaded successfully. |
 
 
 ### `type: "autocomplete"` — AutocompleteElementConfig
@@ -928,6 +944,7 @@ All element configs inherit these fields:
 | `value` | `string` |  |  | Controlled value. |
 | `defaultValue` | `string` |  |  |  |
 | `placeholder` | `string` |  |  |  |
+| `suggestionsUrl` | `string` |  |  | Server-side type-ahead suggestions endpoint. `GET {suggestionsUrl}?q={encodedQuery}` → `Array<{ label: string, value: string }>` When provided, replaces local option filtering with server results. Requests are debounced (300 ms) and cancelled on unmount. |
 
 
 ### `type: "fileupload"` — FileUploadElementConfig
@@ -941,6 +958,7 @@ All element configs inherit these fields:
 | `multiple` | `boolean` |  |  | Allow multiple files. |
 | `maxSize` | `number` |  |  | Maximum individual file size in bytes. |
 | `placeholder` | `string` |  |  | Placeholder text shown inside the drop zone. |
+| `uploadUrl` | `string` |  |  | POST endpoint for uploading selected file(s) as `multipart/form-data`. |
 
 
 ### `type: "colorpicker"` — ColorPickerElementConfig
@@ -953,6 +971,7 @@ All element configs inherit these fields:
 | `value` | `string` |  |  | Controlled hex color string (e.g. "#ff0000"). |
 | `defaultValue` | `string` |  |  |  |
 | `format` | `'hex' | 'rgb'` |  |  | Display format shown in the text input. |
+| `validateUrl` | `string` |  |  | Async validation endpoint called when the color changes. `GET {validateUrl}?value={encodedHex}` → `{ valid: boolean, message?: string }` |
 
 
 ### `type: "rangeslider"` — RangeSliderElementConfig
@@ -967,6 +986,7 @@ All element configs inherit these fields:
 | `step` | `number` |  |  | Step increment. |
 | `value` | `[number, number]` |  |  | Controlled [minValue, maxValue] tuple. |
 | `defaultValue` | `[number, number]` |  |  |  |
+| `validateUrl` | `string` |  |  | Async validation endpoint called when the range changes (on pointer-up / keyboard). `GET {validateUrl}?min={minValue}&max={maxValue}` → `{ valid: boolean, message?: string }` |
 
 
 ### `type: "rating"` — RatingElementConfig
@@ -980,6 +1000,7 @@ All element configs inherit these fields:
 | `value` | `number` |  |  | Controlled rating value. |
 | `defaultValue` | `number` |  |  |  |
 | `allowHalf` | `boolean` |  |  | Allow half-star increments. |
+| `submitUrl` | `string` |  |  | POST endpoint called immediately when a star rating is selected. `POST {submitUrl}` body: `{ name: string, value: number }` → any Useful for instant rating submission (e.g. product/content ratings). |
 
 
 ### `type: "otpinput"` — OtpInputElementConfig
@@ -993,6 +1014,7 @@ All element configs inherit these fields:
 | `value` | `string` |  |  | Controlled value string (digits only). |
 | `defaultValue` | `string` |  |  |  |
 | `mask` | `boolean` |  |  | Mask input characters (e.g. for PIN). |
+| `verifyUrl` | `string` |  |  | Server-side OTP verification endpoint called automatically when all digits are entered. `POST {verifyUrl}` body: `{ otp: string }` → `{ valid: boolean, message?: string }` |
 
 
 ### `type: "phoneinput"` — PhoneInputElementConfig
@@ -1007,6 +1029,7 @@ All element configs inherit these fields:
 | `value` | `string` |  |  | Controlled full phone value (dialCode + number). |
 | `defaultValue` | `string` |  |  |  |
 | `placeholder` | `string` |  |  |  |
+| `validateUrl` | `string` |  |  | Async validation endpoint called on blur. `GET {validateUrl}?value={encodedPhoneNumber}` → `{ valid: boolean, message?: string }` @example `"/api/phone/validate"` — checks carrier lookup or format validity. |
 
 
 ### `type: "custom"` — CustomElementConfig

@@ -26,6 +26,7 @@ final class CheckboxElementConfig extends BaseElementConfig
         public readonly ?bool $defaultChecked = null,
         public readonly ?bool $checked = null,
         public readonly ?string $value = null,
+        public readonly ?string $validateUrl = null,
     ) {
         parent::__construct($id, $name, $order, $width, $label, $labelPosition, $tooltip, $units, $unitsPosition, $disabled, $readonly, $required, $hidden, $hiddenExpr, $disabledExpr, $className, $style, $validations);
     }
@@ -38,6 +39,7 @@ final class CheckboxElementConfig extends BaseElementConfig
             'defaultChecked' => $this->defaultChecked,
             'checked' => $this->checked,
             'value' => $this->value,
+            'validateUrl' => $this->validateUrl,
         ], fn($v) => $v !== null));
     }
 }

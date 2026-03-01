@@ -31,6 +31,7 @@ final class PhoneInputElementConfig extends BaseElementConfig
         public readonly ?string $value = null,
         public readonly ?string $defaultValue = null,
         public readonly ?string $placeholder = null,
+        public readonly ?string $validateUrl = null,
     ) {
         parent::__construct($id, $name, $order, $width, $label, $labelPosition, $tooltip, $units, $unitsPosition, $disabled, $readonly, $required, $hidden, $hiddenExpr, $disabledExpr, $className, $style, $validations);
     }
@@ -44,6 +45,7 @@ final class PhoneInputElementConfig extends BaseElementConfig
             'value' => $this->value,
             'defaultValue' => $this->defaultValue,
             'placeholder' => $this->placeholder,
+            'validateUrl' => $this->validateUrl,
         ], fn($v) => $v !== null);
 
         $extra['countries'] = array_map(fn(PhoneCountryOption $c) => $c->toArray(), $this->countries);

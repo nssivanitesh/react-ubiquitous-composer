@@ -30,6 +30,7 @@ final class AutocompleteElementConfig extends BaseElementConfig
         public readonly ?string $value = null,
         public readonly ?string $defaultValue = null,
         public readonly ?string $placeholder = null,
+        public readonly ?string $suggestionsUrl = null,
     ) {
         parent::__construct($id, $name, $order, $width, $label, $labelPosition, $tooltip, $units, $unitsPosition, $disabled, $readonly, $required, $hidden, $hiddenExpr, $disabledExpr, $className, $style, $validations);
     }
@@ -42,6 +43,7 @@ final class AutocompleteElementConfig extends BaseElementConfig
             'value' => $this->value,
             'defaultValue' => $this->defaultValue,
             'placeholder' => $this->placeholder,
+            'suggestionsUrl' => $this->suggestionsUrl,
         ], fn($v) => $v !== null);
 
         $extra['options'] = array_map(fn(SelectOption $o) => $o->toArray(), $this->options);

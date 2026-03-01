@@ -28,6 +28,7 @@ final class RangeSliderElementConfig extends BaseElementConfig
         public readonly ?int $step = null,
         public readonly ?array $value = null,
         public readonly ?array $defaultValue = null,
+        public readonly ?string $validateUrl = null,
     ) {
         parent::__construct($id, $name, $order, $width, $label, $labelPosition, $tooltip, $units, $unitsPosition, $disabled, $readonly, $required, $hidden, $hiddenExpr, $disabledExpr, $className, $style, $validations);
     }
@@ -42,6 +43,7 @@ final class RangeSliderElementConfig extends BaseElementConfig
             'step' => $this->step,
             'value' => $this->value,
             'defaultValue' => $this->defaultValue,
+            'validateUrl' => $this->validateUrl,
         ], fn($v) => $v !== null));
     }
 }

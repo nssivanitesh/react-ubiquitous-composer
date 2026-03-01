@@ -28,6 +28,7 @@ final class OutputElementConfig extends BaseElementConfig
         public readonly ?string $value = null,
         public readonly ?string $format = null,
         public readonly ?string $formula = null,
+        public readonly ?string $valueUrl = null,
     ) {
         parent::__construct($id, $name, $order, $width, $label, $labelPosition, $tooltip, $units, $unitsPosition, $disabled, $readonly, $required, $hidden, $hiddenExpr, $disabledExpr, $className, $style, $validations);
     }
@@ -42,6 +43,7 @@ final class OutputElementConfig extends BaseElementConfig
             'value' => $this->value,
             'format' => $this->format,
             'formula' => $this->formula,
+            'valueUrl' => $this->valueUrl,
         ], fn($v) => $v !== null));
     }
 }

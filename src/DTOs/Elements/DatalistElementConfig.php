@@ -24,6 +24,7 @@ final class DatalistElementConfig extends BaseElementConfig
         ?array $style = null,
         array $validations = [],
         public readonly array $options = [],
+        public readonly ?string $optionsUrl = null,
     ) {
         parent::__construct($id, $name, $order, $width, $label, $labelPosition, $tooltip, $units, $unitsPosition, $disabled, $readonly, $required, $hidden, $hiddenExpr, $disabledExpr, $className, $style, $validations);
     }
@@ -33,6 +34,9 @@ final class DatalistElementConfig extends BaseElementConfig
     public function toArray(): array
     {
         $extra = ['options' => $this->options];
+        if ($this->optionsUrl !== null) {
+            $extra['optionsUrl'] = $this->optionsUrl;
+        }
         return array_merge($this->baseArray(), $extra);
     }
 }

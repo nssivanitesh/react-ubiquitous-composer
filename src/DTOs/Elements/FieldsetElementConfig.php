@@ -25,6 +25,8 @@ final class FieldsetElementConfig extends BaseElementConfig
         array $validations = [],
         public readonly array $children = [],
         public readonly ?string $legend = null,
+        public readonly ?string $submitUrl = null,
+        public readonly ?string $submitMethod = null,
     ) {
         parent::__construct($id, $name, $order, $width, $label, $labelPosition, $tooltip, $units, $unitsPosition, $disabled, $readonly, $required, $hidden, $hiddenExpr, $disabledExpr, $className, $style, $validations);
     }
@@ -35,6 +37,8 @@ final class FieldsetElementConfig extends BaseElementConfig
     {
         $extra = array_filter([
             'legend' => $this->legend,
+            'submitUrl' => $this->submitUrl,
+            'submitMethod' => $this->submitMethod,
         ], fn($v) => $v !== null);
 
         $extra['children'] = array_map(fn($c) => $c->toArray(), $this->children);

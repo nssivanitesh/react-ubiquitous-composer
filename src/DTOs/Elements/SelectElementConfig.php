@@ -29,6 +29,7 @@ final class SelectElementConfig extends BaseElementConfig
         public readonly string|array|null $defaultValue = null,
         public readonly string|array|null $value = null,
         public readonly ?string $placeholder = null,
+        public readonly ?string $optionsUrl = null,
     ) {
         parent::__construct($id, $name, $order, $width, $label, $labelPosition, $tooltip, $units, $unitsPosition, $disabled, $readonly, $required, $hidden, $hiddenExpr, $disabledExpr, $className, $style, $validations);
     }
@@ -43,6 +44,7 @@ final class SelectElementConfig extends BaseElementConfig
             'defaultValue' => $this->defaultValue,
             'value' => $this->value,
             'placeholder' => $this->placeholder,
+            'optionsUrl' => $this->optionsUrl,
         ], fn($v) => $v !== null);
 
         $extra['options'] = array_map(fn($o) => $o->toArray(), $this->options);
